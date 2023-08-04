@@ -6,6 +6,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.19.0
 	github.com/aws/aws-sdk-go-v2/config v1.18.29
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.19.11
+	golang.org/x/exp v0.0.0-20230801115018-d63ba01acd4b
 )
 
 require (
