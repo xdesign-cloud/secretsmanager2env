@@ -1,0 +1,9 @@
+linters:
+  enable:
+  - bidichk
+  - gci
+  - gocognit
+  - gocritic
+  - gofumpt
+  - gosec
+  - whitespace
