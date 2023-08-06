@@ -41,7 +41,10 @@ func getFromSecretsManager(secretName string) map[string]string {
 	}
 
 	appConfig := map[string]string{}
-	json.Unmarshal([]byte(*result.SecretString), &appConfig)
+	err = json.Unmarshal([]byte(*result.SecretString), &appConfig)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
 	return appConfig
 }
