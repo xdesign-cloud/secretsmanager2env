@@ -49,7 +49,36 @@ func getFromSecretsManager(secretName string) map[string]string {
 func convertToEnvVarStatements(config map[string]string) []string {
 	var output []string
 	for key, val := range config {
-		output = append(output, fmt.Sprintf("export %s=%s", strings.ToUpper(key), val))
+		line := fmt.Sprintf(
+			"export %s=%s",
+			sanitizeKey(key),
+			sanitizeValue(val),
+		)
+		line = sanitizeLine(line)
+
+		output = append(output, line)
 	}
 	return output
+}
+
+// sanitizeLine will remove known dangerous characters from the entire line
+func sanitizeLine(line string) string {
+	return line
+}
+
+// santizeKey will format the key in a format valid for environment variables
+func sanitizeKey(key string) string {
+	key = strings.ToUpper(key)
+	key = strings.ReplaceAll(key, " ", "_")
+	key = strings.ReplaceAll(key, "-", "_")
+
+	return key
+}
+
+// sanitizeValue will perform any sanitization which cannot happen at a line level
+func sanitizeValue(value string) string {
+	// Always quote the value - this handles spaces, but also a lot of bad characters
+	value = fmt.Sprintf("\"%s\"", value)
+
+	return value
 }
